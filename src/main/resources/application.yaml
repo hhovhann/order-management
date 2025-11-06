@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pilotes
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+mybatis:
+  type-handlers-package: am.hhovhann.order_management.adapter.out.persistence.mybatis.type
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  type-aliases-package: am.hhovhann.order_management.domain.model
+
+logging:
+  level:
+    org.apache.ibatis: DEBUG
+    am.hhovhann.order_management: DEBUG
+# Enable all actuator endpoints (optional, but useful for debugging)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics
+
+# Alternatively, expose all endpoints (not recommended for production)
+# management.endpoints.web.exposure.include=*
+
+server:
+  port: 8080

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="am.hhovhann.order_management.adapter.out.persistence.mybatis.StatisticsMapper">
+
+    <resultMap id="StatsResult" type="am.hhovhann.order_management.domain.model.CustomerOrderStats">
+        <constructor>
+            <arg column="customer_id" javaType="java.util.UUID"/>
+            <arg column="customer_name" javaType="java.lang.String"/>
+            <arg column="total_orders" javaType="java.lang.Long"/>
+            <arg column="order_total_amount" javaType="java.math.BigDecimal"/>
+        </constructor>
+    </resultMap>
+
+
+
+    <select id="getHighValueCustomers" resultMap="StatsResult">
+        SELECT c.id AS customer_id,
+        c.first_name || ' ' || c.last_name AS customer_name,
+        COUNT(o.id) AS total_orders,
+        SUM(o.total_price) AS order_total_amount
+        FROM customer c
+        JOIN orders o ON c.id = o.customer_id
+        GROUP BY c.id, c.first_name, c.last_name
+        HAVING SUM(o.total_price) > 700 AND COUNT(o.id) > 2
+    </select>
+
+</mapper>

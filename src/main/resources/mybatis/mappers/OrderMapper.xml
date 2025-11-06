@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="am.hhovhann.order_management.adapter.out.persistence.mybatis.OrderMapper">
+
+    <resultMap id="OrderResult" type="am.hhovhann.order_management.domain.model.Order">
+        <constructor>
+            <idArg column="id" javaType="java.util.UUID"/>
+            <arg column="customer_id" javaType="java.util.UUID"/>
+            <arg column="street" javaType="java.lang.String"/>
+            <arg column="city" javaType="java.lang.String"/>
+            <arg column="country" javaType="java.lang.String"/>
+            <arg column="postcode" javaType="java.lang.String"/>
+            <arg column="address_number" javaType="java.lang.Integer"/>
+            <arg column="number_of_pilotes" javaType="java.lang.Integer"/>
+            <arg column="price_per_order" javaType="java.math.BigDecimal"/>
+            <arg column="total_price" javaType="java.math.BigDecimal"/>
+            <arg column="creation_time" javaType="java.time.OffsetDateTime"/>
+            <arg column="update_time" javaType="java.time.OffsetDateTime"/>
+            <arg column="cancelled" javaType="java.lang.Boolean"/>
+        </constructor>
+    </resultMap>
+
+
+
+    <insert id="insert" parameterType="am.hhovhann.order_management.domain.model.Order">
+        INSERT INTO orders (id, customer_id, street, city, country, postcode, address_number,
+        number_of_pilotes, price_per_order, total_price, creation_time, update_time, cancelled)
+        VALUES (#{id}, #{customerId}, #{street}, #{city}, #{country}, #{postcode}, #{addressNumber},
+        #{numberOfPilotes}, #{pricePerOrder}, #{totalPrice}, #{creationTime}, #{updateTime}, #{cancelled})
+    </insert>
+
+    <update id="update" parameterType="am.hhovhann.order_management.domain.model.Order">
+        UPDATE orders
+        SET street = #{street},
+        city = #{city},
+        country = #{country},
+        postcode = #{postcode},
+        address_number = #{addressNumber},
+        number_of_pilotes = #{numberOfPilotes},
+        price_per_order = #{pricePerOrder},
+        total_price = #{totalPrice},
+        update_time = #{updateTime},
+        cancelled = #{cancelled}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultMap="OrderResult">
+        SELECT * FROM orders WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="OrderResult">
+        SELECT * FROM orders ORDER BY creation_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="searchByCustomerName" resultMap="OrderResult">
+        SELECT o.*
+        FROM orders o
+        JOIN customer c ON o.customer_id = c.id
+        WHERE lower(c.first_name || ' ' || c.last_name) LIKE concat('%', lower(#{name}), '%')
+        ORDER BY o.creation_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+</mapper>

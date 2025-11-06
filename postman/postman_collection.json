@@ -1,0 +1,268 @@
+{
+  "info": {
+    "name": "Pilotes Order Management (Full)",
+    "_postman_id": "pilotes-full",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"firstName\":\"Hayk\",\"lastName\":\"Hovhannisyan\",\"phoneNumber\":\"+349876543\",\"email\":\"hayk@example.com\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers"]
+            }
+          }
+        },
+        {
+          "name": "List Customers (pageable)",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers"],
+              "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "10" }]
+            }
+          }
+        },
+        {
+          "name": "Search Customers by Name",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers?q=Hayk&page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers"],
+              "query": [
+                { "key": "q", "value": "Hayk" },
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Customer by ID",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"firstName\":\"Hayk\",\"lastName\":\"Hovhannisyan\",\"phoneNumber\":\"+341234567\",\"email\":\"hayk@example.com\"}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin" }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"customerId\":\"{{customerId}}\",\"street\":\"Farm Road 1\",\"city\":\"Mallorca\",\"country\":\"Spain\",\"postcode\":\"07001\",\"addressNumber\":42,\"numberOfPilotes\":3,\"pricePerOrder\":250.0}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders"]
+            }
+          }
+        },
+        {
+          "name": "List Orders (pageable)",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders?page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders"],
+              "query": [{ "key": "page", "value": "0" }, { "key": "size", "value": "10" }]
+            }
+          }
+        },
+        {
+          "name": "Search Orders by Customer Name",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders/search?name=Hayk&page=0&size=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders", "search"],
+              "query": [
+                { "key": "name", "value": "Hayk" },
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders/{{orderId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Order",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "auth": {
+              "type": "basic",
+              "basic": [
+                { "key": "username", "value": "admin" },
+                { "key": "password", "value": "admin" }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"customerId\":\"{{customerId}}\",\"street\":\"Updated Street 99\",\"city\":\"Madrid\",\"country\":\"Spain\",\"postcode\":\"28001\",\"addressNumber\":99,\"numberOfPilotes\":5,\"pricePerOrder\":200.0}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders/{{orderId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders", "{{orderId}}"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "PATCH",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/orders/{{orderId}}/cancel",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "orders", "{{orderId}}", "cancel"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistics",
+      "item": [
+        {
+          "name": "High Value Customers",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "basic", "basic": [{ "key": "username", "value": "admin" }, { "key": "password", "value": "admin" }] },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/statistics/orders",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "statistics", "orders"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

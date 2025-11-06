@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="am.hhovhann.order_management.adapter.out.persistence.mybatis.CustomerMapper">
+<!--    <resultMap id="CustomerResult" type="am.hhovhann.order_management.domain.model.Customer">-->
+<!--        <id property="id" column="id" javaType="java.util.UUID"/>-->
+<!--        <result property="firstName" column="first_name" javaType="java.lang.String"/>-->
+<!--        <result property="lastName" column="last_name" javaType="java.lang.String"/>-->
+<!--        <result property="phoneNumber" column="phone_number" javaType="java.lang.String"/>-->
+<!--        <result property="email" column="email" javaType="java.lang.String"/>-->
+<!--    </resultMap>-->
+
+    <resultMap id="CustomerResult" type="am.hhovhann.order_management.domain.model.Customer">
+        <constructor>
+            <idArg column="id" javaType="java.util.UUID" name="id"/>
+            <arg column="first_name" javaType="java.lang.String" name="firstName"/>
+            <arg column="last_name" javaType="java.lang.String" name="lastName"/>
+            <arg column="phone_number" javaType="java.lang.String" name="phoneNumber"/>
+            <arg column="email" javaType="java.lang.String" name="email"/>
+        </constructor>
+    </resultMap>
+
+    <insert id="insert" parameterType="am.hhovhann.order_management.domain.model.Customer">
+        INSERT INTO customer (id, first_name, last_name, phone_number, email)
+        VALUES (#{id}, #{firstName}, #{lastName}, #{phoneNumber}, #{email})
+    </insert>
+
+    <update id="update" parameterType="am.hhovhann.order_management.domain.model.Customer">
+        UPDATE customer
+        SET first_name = #{firstName},
+        last_name = #{lastName},
+        phone_number = #{phoneNumber},
+        email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.util.UUID">
+        DELETE FROM customer WHERE id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="java.util.UUID" resultMap="CustomerResult">
+        SELECT id, first_name, last_name, phone_number, email FROM customer WHERE id = #{id}
+    </select>
+
+    <select id="searchByName" resultMap="CustomerResult">
+        SELECT id, first_name, last_name, phone_number, email FROM customer
+        WHERE lower(first_name) LIKE concat('%', lower(#{name}), '%')
+        OR lower(last_name) LIKE concat('%', lower(#{name}), '%')
+        ORDER BY first_name
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+</mapper>
